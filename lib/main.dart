@@ -23,8 +23,10 @@ class MainApp extends StatelessWidget {
         home: Scaffold(
             appBar: AppBar(
               title: const Text("Select restaurant"),
+              elevation: 0.0,
             ),
             body: Body(),
+            backgroundColor: const Color(0xFFE66A63),
             floatingActionButton: FloatingActionButton(
               onPressed: () {},
               backgroundColor: const Color(0xFFD29DAC),
@@ -42,19 +44,26 @@ class Body extends StatelessWidget {
     final List<RestaurantBtn> btns =
         restaurants.map((n) => RestaurantBtn(n)).toList();
 
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Container(
-          decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
-              borderRadius: BorderRadius.circular(12)),
-          constraints: BoxConstraints.loose(Size(500, restaurants.length * 80)),
-          margin: const EdgeInsets.all(50),
-          padding: const EdgeInsets.all(20),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: btns)),
-    );
+    return Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.tertiary,
+          borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(40), topLeft: Radius.circular(40)),
+        ),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondary,
+                  borderRadius: BorderRadius.circular(12)),
+              constraints:
+                  BoxConstraints.loose(Size(500, restaurants.length * 80)),
+              margin: const EdgeInsets.all(50),
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: btns)),
+        ));
   }
 }
 
