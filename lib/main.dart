@@ -21,8 +21,11 @@ class MainApp extends StatelessWidget {
           // splashColor: const Color(0xFFE66A63),
           // highlightColor: const Color(0xFFE66A63),
           // hoverColor: const Color(0xFFE66A63),
-          textTheme:
-              const TextTheme(bodyMedium: TextStyle(color: Colors.purple)),
+          textTheme: const TextTheme(
+            bodyMedium: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+            labelLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
         ),
         home: const Home());
   }

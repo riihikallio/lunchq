@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lunchq/views/common.dart';
+import 'package:lunchq/views/restaurant.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -11,7 +12,7 @@ class Home extends StatelessWidget {
           title: const Text("Select restaurant"),
           elevation: 0.0,
         ),
-        body: _Body(),
+        body: _Body(key: UniqueKey()),
         backgroundColor: const Color(0xFFE66A63), // Theme primary
         floatingActionButton: const SettingsFAB());
   }
@@ -23,8 +24,8 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<RestaurantBtn> btns =
-        restaurants.map((n) => RestaurantBtn(n)).toList();
+    final List<_RestaurantBtn> btns =
+        restaurants.map((n) => _RestaurantBtn(n)).toList();
 
     return Container(
         decoration: BoxDecoration(
@@ -49,10 +50,10 @@ class _Body extends StatelessWidget {
   }
 }
 
-class RestaurantBtn extends StatelessWidget {
+class _RestaurantBtn extends StatelessWidget {
   final String name;
 
-  const RestaurantBtn(this.name, [Key? key]) : super(key: key);
+  const _RestaurantBtn(this.name, [Key? key]) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,14 +61,19 @@ class RestaurantBtn extends StatelessWidget {
       width: 200,
       height: 70,
       child: ElevatedButton(
-        onPressed: () => {},
+        onPressed: () => {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => Restaurant(name),
+            ),
+          )
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12), // <-- Radius
+            borderRadius: BorderRadius.circular(12),
           ),
-          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         child: Row(children: [
           Expanded(child: Text(name)),
