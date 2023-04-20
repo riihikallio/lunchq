@@ -17,6 +17,9 @@ class MainApp extends StatelessWidget {
               primary: const Color(0xFFE66A63),
               secondary: const Color(0xFFD29DAC),
               tertiary: const Color(0xFFF9DEDC)),
+          // splashColor: const Color(0xFFE66A63),
+          // highlightColor: const Color(0xFFE66A63),
+          // hoverColor: const Color(0xFFE66A63),
           textTheme:
               const TextTheme(bodyMedium: TextStyle(color: Colors.purple)),
         ),
@@ -26,10 +29,10 @@ class MainApp extends StatelessWidget {
               elevation: 0.0,
             ),
             body: Body(),
-            backgroundColor: const Color(0xFFE66A63),
+            backgroundColor: const Color(0xFFE66A63), // Theme primary
             floatingActionButton: FloatingActionButton(
               onPressed: () {},
-              backgroundColor: const Color(0xFFD29DAC),
+              backgroundColor: const Color(0xFFD29DAC), // Theme secondary
               child: const Icon(Icons.settings),
             )));
   }
@@ -48,20 +51,20 @@ class Body extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.tertiary,
           borderRadius: const BorderRadius.only(
-              topRight: Radius.circular(40), topLeft: Radius.circular(40)),
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
         ),
         child: Align(
           alignment: Alignment.topCenter,
           child: Container(
               decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
-                  borderRadius: BorderRadius.circular(12)),
+                  borderRadius: BorderRadius.circular(20)),
               constraints:
-                  BoxConstraints.loose(Size(500, restaurants.length * 80)),
+                  BoxConstraints.loose(Size(500, restaurants.length * 90)),
               margin: const EdgeInsets.all(50),
               padding: const EdgeInsets.all(20),
               child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: btns)),
         ));
   }
@@ -75,15 +78,18 @@ class RestaurantBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 150,
-      height: 60,
+      width: 200,
+      height: 70,
       child: ElevatedButton(
         onPressed: () => {},
         style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            textStyle:
-                const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            foregroundColor: Colors.black),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), // <-- Radius
+          ),
+          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         child: Row(children: [
           Expanded(child: Text(name)),
           const Icon(Icons.star_border)
