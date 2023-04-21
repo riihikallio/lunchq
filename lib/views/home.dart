@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lunchq/views/common.dart';
 import 'package:lunchq/views/restaurant.dart';
 
 class Home extends StatelessWidget {
@@ -14,7 +13,11 @@ class Home extends StatelessWidget {
         ),
         body: _Body(key: UniqueKey()),
         backgroundColor: const Color(0xFFE66A63), // Theme primary
-        floatingActionButton: const SettingsFAB());
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          backgroundColor: const Color(0xFFD29DAC), // Theme secondary
+          child: const Icon(Icons.settings),
+        ));
   }
 }
 

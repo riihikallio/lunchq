@@ -25,6 +25,7 @@ class MainApp extends StatelessWidget {
             bodyMedium: TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
             labelLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            titleMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
         home: const Home());

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lunchq/views/common.dart';
+import 'queue.dart';
 
 class Restaurant extends StatelessWidget {
   final String name;
@@ -10,13 +10,13 @@ class Restaurant extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(name),
-          elevation: 0.0,
-        ),
-        body: _Body(key: UniqueKey()),
-        backgroundColor: const Color(0xFFE66A63), // Theme primary
-        floatingActionButton: const SettingsFAB());
+      appBar: AppBar(
+        title: Text(name),
+        elevation: 0.0,
+      ),
+      body: _Body(key: UniqueKey()),
+      backgroundColor: const Color(0xFFE66A63), // Theme primary
+    );
   }
 }
 
@@ -47,11 +47,36 @@ class _BodyState extends State<_Body> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const QueueBtn(),
             Menu(onChange: updateTotal),
             const Pickup(),
             Order(total: total),
           ],
         ));
+  }
+}
+
+class QueueBtn extends StatelessWidget {
+  const QueueBtn({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+        alignment: Alignment.centerRight,
+        child: Container(
+            margin: const EdgeInsets.all(20),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.all(20)),
+                onPressed: () => {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const Queue(),
+                        ),
+                      )
+                    },
+                child: const Text("QueueCam"))));
   }
 }
 
@@ -91,12 +116,13 @@ class _MenuState extends State<Menu> {
         margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(20)),
-        height: 300,
+        height: 225,
         child: ListView.separated(
           padding: const EdgeInsets.all(8),
           itemCount: entries.length,
           itemBuilder: (BuildContext context, int index) {
             return CheckboxListTile(
+              visualDensity: const VisualDensity(vertical: -4),
               title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -115,8 +141,11 @@ class _MenuState extends State<Menu> {
               },
             );
           },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
+          separatorBuilder: (BuildContext context, int index) => const Divider(
+            color: Color(0xFFD29DAC),
+            indent: 15,
+            endIndent: 25,
+          ),
         ));
   }
 }
@@ -153,9 +182,16 @@ class _PickupState extends State<Pickup> {
                           padding: const EdgeInsets.all(20)),
                       onPressed: () async {
                         TimeOfDay? picked = await showTimePicker(
-                          context: context,
-                          initialTime: pickup,
-                        );
+                            context: context,
+                            initialTime: pickup,
+                            builder: (context, childWidget) {
+                              return MediaQuery(
+                                  data: MediaQuery.of(context).copyWith(
+                                      // Using 24-Hour format
+                                      alwaysUse24HourFormat: true),
+                                  // If you want 12-Hour format, just change alwaysUse24HourFormat to false or remove all the builder argument
+                                  child: childWidget!);
+                            });
                         setState(() {
                           pickup = picked ?? pickup;
                         });
@@ -188,9 +224,8 @@ class Order extends StatelessWidget {
             borderRadius: BorderRadius.circular(20)),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text("Total " +
-              NumberFormat.simpleCurrency(decimalDigits: 2, locale: "fi_FI")
-                  .format(total)),
+          Text(
+              "Total ${NumberFormat.simpleCurrency(decimalDigits: 2, locale: "fi_FI").format(total)}"),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
